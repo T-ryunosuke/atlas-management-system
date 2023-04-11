@@ -67,7 +67,7 @@ class User extends Authenticatable
     }
 
     public function subjects(){
-        return $this->belongsToMany('App\Models\Users\Subjects', 'subject_users', 'sucject_id', 'user_id');;// リレーションの定義
+        return $this->belongsToMany('App\Models\Users\Subjects', 'subject_users', 'user_id', 'sucject_id');// リレーションの定義
     }
 
     // いいねしているかどうか
