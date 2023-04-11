@@ -61,6 +61,11 @@ class RegisterController extends Controller
     {
         DB::beginTransaction();
         try{
+            $request->validate([
+                ['over_name' => 'required|string|max:10'],
+                ['under_name' => 'required|string|max:10'],
+                ['under_name' => 'required|string|max:10'],
+            ]);
             $old_year = $request->old_year;
             $old_month = $request->old_month;
             $old_day = $request->old_day;
