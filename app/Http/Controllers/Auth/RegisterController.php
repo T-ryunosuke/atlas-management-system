@@ -9,9 +9,13 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Http\Requests;
+
 use DB;
 
 use App\Models\Users\Subjects;
+
+use App\Http\Requests\RegisterRequest;
 
 class RegisterController extends Controller
 {
@@ -57,31 +61,16 @@ class RegisterController extends Controller
         return view('auth.register.register', compact('subjects'));
     }
 
-    public function registerPost(Request $request)
+    public function registerPost(RegisterRequest $request)
     {
-        $request->validate([
-            'over_name' => 'required|string|max:10',
-            'under_name' => 'required|string|max:10',
-            'over_name_kana' => 'required|string|max:30|regex:/^[ア-ン゛゜ァ-ォャ-ョー]+$/u',
-            'under_name_kana' => 'required|string|min:30|regex:/^[ア-ン゛゜ァ-ォャ-ョー]+$/u',
-            'mail_address' => 'required|string|email:filter,dns|max:100|unique:users',
-            'sex' => 'required|numeric|between:1,3',
-            'old_year' => 'required|numeric|min:2000',
-            'old_month' => 'required',
-            'old_day' => 'required',
-            'role' => 'required|numeric|between:1,4',
-            'password' => 'required|string|confirmed',
-            'password_confirmation' => 'required'
-        ]);
         DB::beginTransaction();
         try{
-            $old_year = $request->old_year;
-            $old_month = $request->old_month;
-            $old_day = $request->old_day;
-            $data = $old_year . '-' . $old_month . '-' . $old_day;
-            $birth_day = date('Y-m-d', strtotime($data));
+            //$old_year = $request->old_year;
+            //$old_month = $request->old_month;
+            //$old_day = $request->old_day;
+            //$data = $old_year . '-' . $old_month . '-' . $old_day;
+            //$birth_day = date('Y-m-d', strtotime($data));
             $subjects = $request->subject;
-
             $user_get = User::create([
                 'over_name' => $request->over_name,
                 'under_name' => $request->under_name,
@@ -89,7 +78,7 @@ class RegisterController extends Controller
                 'under_name_kana' => $request->under_name_kana,
                 'mail_address' => $request->mail_address,
                 'sex' => $request->sex,
-                'birth_day' => $birth_day,
+                'birth_day' => $request->birth_day,
                 'role' => $request->role,
                 'password' => bcrypt($request->password)
             ]);
