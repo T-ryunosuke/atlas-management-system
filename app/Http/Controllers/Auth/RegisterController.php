@@ -70,7 +70,7 @@ class RegisterController extends Controller
             //$old_day = $request->old_day;
             //$data = $old_year . '-' . $old_month . '-' . $old_day;
             //$birth_day = date('Y-m-d', strtotime($data));
-            $subjects = $request->subject;
+            //$subjects = $request->subject; 下に移動
             $user_get = User::create([
                 'over_name' => $request->over_name,
                 'under_name' => $request->under_name,
@@ -83,6 +83,8 @@ class RegisterController extends Controller
                 'password' => bcrypt($request->password)
             ]);
             $user = User::findOrFail($user_get->id);
+
+            $subjects = $request->subject;
             $user->subjects()->attach($subjects);
             DB::commit();
             return view('auth.login.login');
