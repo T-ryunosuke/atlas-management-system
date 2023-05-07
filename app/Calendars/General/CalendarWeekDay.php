@@ -35,17 +35,17 @@ class CalendarWeekDay{
      if($one_part_frame){
        $one_part_frame = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '1')->first()->limit_users;
      }else{
-       $one_part_frame = '0';
+       $one_part_frame = '20';
      }
      if($two_part_frame){
        $two_part_frame = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '2')->first()->limit_users;
      }else{
-       $two_part_frame = '0';
+       $two_part_frame = '20';
      }
      if($three_part_frame){
        $three_part_frame = ReserveSettings::with('users')->where('setting_reserve', $ymd)->where('setting_part', '3')->first()->limit_users;
      }else{
-       $three_part_frame = '0';
+       $three_part_frame = '20';
      }
 
      $html = [];
