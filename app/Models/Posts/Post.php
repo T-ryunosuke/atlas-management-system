@@ -22,9 +22,9 @@ class Post extends Model
     public function postComments(){
         return $this->hasMany('App\Models\Posts\PostComment');
     }
-
+    // リレーションの定義(多対多)
     public function subCategories(){
-        // リレーションの定義
+        return $this->belongsToMany('App\Models\Categories\SubCategory', 'post_sub_categories', 'post_id', 'sub_category_id')->withPivot('id');
     }
 
     // コメント数

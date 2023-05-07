@@ -12,8 +12,9 @@ class MainCategory extends Model
         'main_category'
     ];
 
+    // リレーションの定義(1対多の「多」側なので複数形)
     public function subCategories(){
-        // リレーションの定義
+      return $this->hasMany('App\Models\Categories\SubCategory');
     }
 
 }
