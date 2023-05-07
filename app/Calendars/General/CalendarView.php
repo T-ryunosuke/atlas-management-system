@@ -31,7 +31,7 @@ class CalendarView{
     $html[] = '</tr>';
     $html[] = '</thead>';
     $html[] = '<tbody>';
-    $weeks = $this->getWeeks();
+    $weeks = $this->getWeeks();  //2
     foreach($weeks as $week){
       $html[] = '<tr class="'.$week->getClassName().'">';
 
@@ -41,13 +41,14 @@ class CalendarView{
         $toDay = $this->carbon->copy()->format("Y-m-d");
 
         if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
-          $html[] = '<td class="calendar-td">';
+          $html[] = '<td class="past-day">';
         }else{
           $html[] = '<td class="calendar-td '.$day->getClassName().'">';
         }
         $html[] = $day->render();
 
         if(in_array($day->everyDay(), $day->authReserveDay())){
+
           $reservePart = $day->authReserveDate($day->everyDay())->first()->setting_part;
           if($reservePart == 1){
             $reservePart = "リモ1部";
@@ -57,14 +58,20 @@ class CalendarView{
             $reservePart = "リモ3部";
           }
           if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
-            $html[] = '<p class="m-auto p-0 w-75" style="font-size:12px"></p>';
+            $html[] = '<p class="m-auto p-0 w-75" style="font-size:12px">'.$reservePart.'参加</p>';
             $html[] = '<input type="hidden" name="getPart[]" value="" form="reserveParts">';
           }else{
             $html[] = '<button type="submit" class="btn btn-danger p-0 w-75" name="delete_date" style="font-size:12px" value="'. $day->authReserveDate($day->everyDay())->first()->setting_reserve .'">'. $reservePart .'</button>';
             $html[] = '<input type="hidden" name="getPart[]" value="" form="reserveParts">';
           }
         }else{
+          if($startDay <= $day->everyDay() && $toDay >= $day->everyDay()){
+            $html[] = '<p class="m-auto p-0 w-75" style="font-size:12px">受付終了</p>';
+            //↓不要？
+            $html[] = '<input type="hidden" name="getPart[]" value="" form="reserveParts">';
+          }else{
           $html[] = $day->selectPart($day->everyDay());
+          }
         }
         $html[] = $day->getDate();
         $html[] = '</td>';
@@ -82,14 +89,19 @@ class CalendarView{
 
   protected function getWeeks(){
     $weeks = [];
+    //↓初日
     $firstDay = $this->carbon->copy()->firstOfMonth();
+    //↓月末まで
     $lastDay = $this->carbon->copy()->lastOfMonth();
-    $week = new CalendarWeek($firstDay->copy());
+    //↓1週目
+    $week = new CalendarWeek($firstDay->copy());  //1
     $weeks[] = $week;
+    //↓1週間毎にループ(月末まで)
     $tmpDay = $firstDay->copy()->addDay(7)->startOfWeek();
     while($tmpDay->lte($lastDay)){
       $week = new CalendarWeek($tmpDay, count($weeks));
       $weeks[] = $week;
+      //↓次の週=+7日する
       $tmpDay->addDay(7);
     }
     return $weeks;
