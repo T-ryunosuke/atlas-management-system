@@ -4,7 +4,7 @@ namespace App\Searchs;
 use App\Models\Users\User;
 
 class SelectNames implements DisplayUsers{
-
+  // カテゴリがnameで$subjectsが空の時の分岐
   public function resultUsers($keyword, $category, $updown, $gender, $role, $subjects){
     if(empty($gender)){
       $gender = ['1', '2'];

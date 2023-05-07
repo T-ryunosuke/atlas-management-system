@@ -4,7 +4,7 @@ namespace App\Searchs;
 use App\Models\Users\User;
 
 class SelectNameDetails implements DisplayUsers{
-
+  // カテゴリがnameで$subjectsが空じゃない時の分岐
   // 改修課題：選択科目の検索機能
   public function resultUsers($keyword, $category, $updown, $gender, $role, $subjects){
     if(is_null($gender)){
