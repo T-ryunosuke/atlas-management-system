@@ -159,7 +159,13 @@ return [
         'old_day' => '生年月日（日）',
         'role' => '役職',
         'password' => 'パスワード',
-        'password_confirmation' => '確認用パスワード'
+        'password_confirmation' => '確認用パスワード',
+        'post_category_id' => 'カテゴリー',
+        'post_title' => 'タイトル',
+        'post_body' => '投稿内容',
+        'main_category_name' => 'メインカテゴリー',
+        'sub_category_name' => 'サブカテゴリー',
+        'comment' => 'コメント'
     ],
 
 ];
